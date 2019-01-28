@@ -14,13 +14,13 @@ class BookSearchPage extends Component {
                     <BookShelf shelf={BOOKSHELF_SEARCH_RESULT} shelves={shelves} books={books} />
                 </div>
             </div>
-        );
+        )
     }
 }
 
 BookSearchPage.propTypes = {
     shelves: PropTypes.array.isRequired,
     books: PropTypes.array //optional
-};
+}
 
-export default BookSearchPage;
+export default BookSearchPage

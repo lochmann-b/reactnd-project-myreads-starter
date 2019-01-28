@@ -10,7 +10,7 @@ import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-     books: []
+    books: []
   }
 
   shelves = [
@@ -28,12 +28,28 @@ class BooksApp extends React.Component {
     },
   ]
 
+  moveBookToShelf = (book, shelfKey) => {
+    BooksAPI.update(book, shelfKey).then(shelves => this.setState(
+      (prevState) => {
+        if (Array.isArray(shelves[shelfKey]) && shelves[shelfKey].filter(bookKey => bookKey === book.key)) { //update worked
+          book.shelf = shelfKey
+          return [...prevState.books.filter(currentBook => currentBook.id !== book.id), book]
+        }
+        return prevState.books //update didn't work
+      }
+    )).catch(error => {
+      alert(`An error happened: ${error}`)
+    })
+  }
+
   componentDidMount() {
     BooksAPI.getAll().then(
       (books) => {
         this.setState(() => ({ books }))
       }
-    )
+    ).catch(error => {
+      alert(`An error happened: ${error}`)
+    })
   }
 
   render() {
@@ -43,8 +59,8 @@ class BooksApp extends React.Component {
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
-          <Route path="/search" render={() => (<BookSearchPage shelves={this.shelves} />)} />
-          <Route exact path="/" render={() => (<BookShelves shelves={this.shelves} books={this.state.books} />)} />
+          <Route path="/search" render={() => (<BookSearchPage shelves={this.shelves} onMoveBookToShelf={this.moveBookToShelf} />)} />
+          <Route exact path="/" render={() => (<BookShelves shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
         </div>
       </div>
     )

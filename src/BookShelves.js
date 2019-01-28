@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom'
 
 class BookShelves extends Component {
     render() {
-        const { shelves, books } = this.props
+        const { shelves, books, onMoveBookToShelf} = this.props
 
         return (
             <div>
                 <div className="list-books-content">
                     {shelves.map(
-                        shelf => (<BookShelf key={shelf.key} shelf={shelf} shelves={shelves} books={books.filter(book => book.shelf === shelf.key)} />)
+                        shelf => (<BookShelf key={shelf.key} shelf={shelf} shelves={shelves} books={books.filter(book => book.shelf === shelf.key)} onMoveBookToShelf={onMoveBookToShelf} />)
                     )}
                 </div>
                 <Link className="open-search" to="/search">
@@ -24,7 +24,8 @@ class BookShelves extends Component {
 
 BookShelves.propTypes = {
     shelves: PropTypes.array.isRequired,
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onMoveBookToShelf: PropTypes.func.isRequired
 }
 
 export default BookShelves

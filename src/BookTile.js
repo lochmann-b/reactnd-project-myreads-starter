@@ -22,7 +22,7 @@ const BookTile = (props) => {
                 <BookShelfChanger shelves={shelves} currentShelfKey={shelf} onMoveBookToShelf={(shelfId) => onMoveBookToShelf(book, shelfId)} />
             </div>
             <div className="book-title">{title}</div>
-            <div className="book-authors">{authors}</div>
+            <div className="book-authors">{authors.join(', ')}</div>
         </div>
     )
 }

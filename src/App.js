@@ -67,13 +67,8 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <Route path="/search" render={() => (<BookSearchPage shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
-          <Route exact path="/" render={() => (<BookShelves shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
-        </div>
+        <Route path="/search" render={() => (<BookSearchPage shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
+        <Route exact path="/" render={() => (<BookShelves shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
       </div>
     )
   }

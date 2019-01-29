@@ -29,6 +29,11 @@ class BooksApp extends React.Component {
   ]
 
   handleUpdateResponse = (currentBooks, response, movedBook, shelfKeyMovedTo) => {
+    //book deleted from shelves
+    if (shelfKeyMovedTo === BOOKSHELF_NONE.key) {
+      return currentBooks.filter(currentBook => currentBook.id !== movedBook.id)
+    }
+    
     //check if the shelf from the response contains the moved book. if so, assume that the update worked.
     if (Array.isArray(response[shelfKeyMovedTo]) && response[shelfKeyMovedTo].filter(bookKey => bookKey === movedBook.key)) {
       //update worked. update movedBook, copy all other books into a new array and append the updated book

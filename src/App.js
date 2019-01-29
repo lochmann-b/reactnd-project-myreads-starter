@@ -3,7 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookShelves from './BookShelves'
 import BookSearchPage from './BookSearchPage'
-import { Route } from 'react-router-dom'
+import { Route, Switch, Link } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
@@ -66,8 +66,11 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path="/search" render={() => (<BookSearchPage shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
-        <Route exact path="/" render={() => (<BookShelves shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
+        <Switch>
+          <Route path="/search" render={() => (<BookSearchPage shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
+          <Route exact path="/" render={() => (<BookShelves shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
+          <Route render={ () => (<div><h1>404</h1><p>This is a very basic 404 page. Better designs could be found here:<br /><a href='https://www.crazyegg.com/blog/404-page-web-design/'>How To Design a 404 Page That Keeps Visitors On Your Site.</a></p><p><Link to='/'>Go home</Link></p></div>)} />
+        </Switch>
       </div>
     )
   }

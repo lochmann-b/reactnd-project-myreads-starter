@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BookTile from './BookTile'
 
@@ -11,13 +11,13 @@ class BookShelf extends Component {
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {books.map(book => (
-                            <BookTile key={book.id} book={book} shelves={shelves} onMoveBookToShelf={onMoveBookToShelf}/>
+                            <BookTile key={book.id} book={book} shelves={shelves} onMoveBookToShelf={onMoveBookToShelf} />
                         ))
                         }
                     </ol>
                 </div>
             </div>
-        );
+        )
     }
 }
 

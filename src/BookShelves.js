@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BookShelf from './BookShelf';
+import BookShelf from './BookShelf'
 import { Link } from 'react-router-dom'
 
 class BookShelves extends Component {
@@ -15,7 +15,13 @@ class BookShelves extends Component {
                 <div>
                     <div className="list-books-content">
                         {shelves.map(
-                            shelf => (<BookShelf key={shelf.key} shelf={shelf} shelves={shelves} books={books.filter(book => book.shelf === shelf.key)} onMoveBookToShelf={onMoveBookToShelf} />)
+                            shelf => (<BookShelf
+                                key={shelf.key}
+                                shelf={shelf}
+                                shelves={shelves}
+                                books={books.filter(book => book.shelf === shelf.key)}
+                                onMoveBookToShelf={onMoveBookToShelf}
+                            />)
                         )}
                     </div>
                     <Link className="open-search" to="/search">
@@ -23,7 +29,7 @@ class BookShelves extends Component {
                     </Link>
                 </div>
             </div>
-        );
+        )
     }
 }
 

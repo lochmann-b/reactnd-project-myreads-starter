@@ -1,8 +1,8 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import BookShelves from './BookShelves';
-import BookSearchPage from './BookSearchPage';
+import BookShelves from './BookShelves'
+import BookSearchPage from './BookSearchPage'
 import { Route } from 'react-router-dom'
 
 
@@ -33,14 +33,16 @@ class BooksApp extends React.Component {
     if (shelfKeyMovedTo === BOOKSHELF_NONE.key) {
       return currentBooks.filter(currentBook => currentBook.id !== movedBook.id)
     }
-    
+
     //check if the shelf from the response contains the moved book. if so, assume that the update worked.
     if (Array.isArray(response[shelfKeyMovedTo]) && response[shelfKeyMovedTo].filter(bookKey => bookKey === movedBook.key)) {
       //update worked. update movedBook, copy all other books into a new array and append the updated book
       movedBook.shelf = shelfKeyMovedTo
       return [...currentBooks.filter(currentBook => currentBook.id !== movedBook.id), movedBook]
     }
-    return currentBooks //update didn't work. return current books
+
+    //update didn't work. return current books
+    return currentBooks
   }
 
   moveBookToShelf = (book, shelfKey) => {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import BookShelfChanger from './BookShelfChanger'
 import PropTypes from 'prop-types'
 import { BOOKSHELF_NONE } from './App.js'
@@ -6,11 +6,13 @@ import { BOOKSHELF_NONE } from './App.js'
 class BookTile extends Component {
     render() {
         const { book, shelves, onMoveBookToShelf } = this.props
-        const { 
+
+        // destructure with default values as not all properties are set
+        const {
             shelf = BOOKSHELF_NONE.key,
-            title='Unknown',
-            authors=['Unknown'],
-            imageLinks = {smallThumbnail: ''} //todo: add url to default image?
+            title = 'Unknown',
+            authors = ['Unknown'],
+            imageLinks = { smallThumbnail: '' } //todo: add url to default image?
         } = book
 
         return (
@@ -22,7 +24,7 @@ class BookTile extends Component {
                 <div className="book-title">{title}</div>
                 <div className="book-authors">{authors}</div>
             </div>
-        );
+        )
     }
 }
 

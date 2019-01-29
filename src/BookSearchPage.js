@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BookShelf from './BookShelf';
+import BookShelf from './BookShelf'
 import BookSearchBar from './BookSearchBar'
 import { BOOKSHELF_SEARCH_RESULT } from './App.js'
-import { search } from './BooksAPI';
+import { search } from './BooksAPI'
 
 class BookSearchPage extends Component {
 
@@ -12,6 +12,11 @@ class BookSearchPage extends Component {
         books: []
     }
 
+    /*
+     Books from search result come without the property shelf.
+     Therfore, the shelf property has to be copied from the books fetched
+     with getAll to ensure that the state on the search page matches the state of the books on the main screen
+    */
     addShelveKeysToBooks = (books) => {
         const bookId2Shelf = new Map()
         this.props.books.forEach(book => bookId2Shelf.set(book.id, book.shelf))
@@ -35,7 +40,7 @@ class BookSearchPage extends Component {
     }
 
     render() {
-        const { shelves, onMoveBookToShelf } = this.props;
+        const { shelves, onMoveBookToShelf } = this.props
         return (
             <div className="search-books">
                 <BookSearchBar searchTerm={this.state.searchTerm} onSearchTermChanged={this.onSearchTermChanged} />

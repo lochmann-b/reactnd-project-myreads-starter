@@ -9,7 +9,8 @@ class BookSearchPage extends Component {
 
     state = {
         searchTerm: '',
-        books: []
+        books: [],
+        searching: false
     }
 
     /*
@@ -28,25 +29,31 @@ class BookSearchPage extends Component {
     onSearchTermChanged = (searchTerm) => {
         this.setState({
             searchTerm: searchTerm,
+            searching: true
         }, () => search(searchTerm).then(
             (books) => {
                 this.setState({
-                    books: Array.isArray(books) ? this.addShelveKeysToBooks(books) : []
+                    books: Array.isArray(books) ? this.addShelveKeysToBooks(books) : [],
+                    searching: false
                 })
             }
         ).catch(error => {
+            this.setState({
+                searching: false
+            })
             alert(`An error happened: ${error}`)
         }))
     }
 
     render() {
         const { shelves, onMoveBookToShelf } = this.props
+        const { searchTerm } = this.state
         return (
             <div className="search-books">
-                <BookSearchBar searchTerm={this.state.searchTerm} onSearchTermChanged={this.onSearchTermChanged} />
-                <div className="search-books-results">
+                <BookSearchBar searchTerm={this.state.searchTerm} onSearchTermChanged={this.onSearchTermChanged} searching={this.state.searching} />            
+                { searchTerm.length > 0 && <div className="search-books-results">
                     <BookShelf shelf={BOOKSHELF_SEARCH_RESULT} shelves={shelves} books={this.state.books} onMoveBookToShelf={onMoveBookToShelf} />
-                </div>
+                </div>}
             </div>
         )
     }

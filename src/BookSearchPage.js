@@ -12,14 +12,21 @@ class BookSearchPage extends Component {
         books: []
     }
 
+    addShelveKeysToBooks = (books) => {
+        const bookId2Shelf = new Map()
+        this.props.books.forEach(book => bookId2Shelf.set(book.id, book.shelf))
+
+        books.forEach(book => book.shelf = bookId2Shelf.has(book.id) ? bookId2Shelf.get(book.id) : BOOKSHELF_SEARCH_RESULT.key)
+        return books
+    }
+
     onSearchTermChanged = (searchTerm) => {
         this.setState({
             searchTerm: searchTerm,
         }, () => search(searchTerm).then(
             (books) => {
-                console.log(books)
                 this.setState({
-                    books: Array.isArray(books) ? books : []
+                    books: Array.isArray(books) ? this.addShelveKeysToBooks(books) : []
                 })
             }
         ).catch(error => {
@@ -42,6 +49,7 @@ class BookSearchPage extends Component {
 
 BookSearchPage.propTypes = {
     shelves: PropTypes.array.isRequired,
+    books: PropTypes.array.isRequired,
     onMoveBookToShelf: PropTypes.func.isRequired
 }
 

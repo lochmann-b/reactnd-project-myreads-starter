@@ -28,15 +28,21 @@ class BooksApp extends React.Component {
     },
   ]
 
+  handleUpdateResponse = (currentBooks, response, movedBook, shelfKeyMovedTo) => {
+    //check if the shelf from the response contains the moved book. if so, assume that the update worked.
+    if (Array.isArray(response[shelfKeyMovedTo]) && response[shelfKeyMovedTo].filter(bookKey => bookKey === movedBook.key)) {
+      //update worked. update movedBook, copy all other books into a new array and append the updated book
+      movedBook.shelf = shelfKeyMovedTo
+      return [...currentBooks.filter(currentBook => currentBook.id !== movedBook.id), movedBook]
+    }
+    return currentBooks //update didn't work. return current books
+  }
+
   moveBookToShelf = (book, shelfKey) => {
     BooksAPI.update(book, shelfKey).then(shelves => this.setState(
-      (prevState) => {
-        if (Array.isArray(shelves[shelfKey]) && shelves[shelfKey].filter(bookKey => bookKey === book.key)) { //update worked
-          book.shelf = shelfKey
-          return [...prevState.books.filter(currentBook => currentBook.id !== book.id), book]
-        }
-        return prevState.books //update didn't work
-      }
+      (prevState) => ({
+        books: this.handleUpdateResponse(prevState.books, shelves, book, shelfKey)
+      })
     )).catch(error => {
       alert(`An error happened: ${error}`)
     })
@@ -52,6 +58,7 @@ class BooksApp extends React.Component {
     })
   }
 
+
   render() {
     return (
       <div className="app">
@@ -59,7 +66,7 @@ class BooksApp extends React.Component {
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
-          <Route path="/search" render={() => (<BookSearchPage shelves={this.shelves} onMoveBookToShelf={this.moveBookToShelf} />)} />
+          <Route path="/search" render={() => (<BookSearchPage shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
           <Route exact path="/" render={() => (<BookShelves shelves={this.shelves} books={this.state.books} onMoveBookToShelf={this.moveBookToShelf} />)} />
         </div>
       </div>

@@ -5,9 +5,6 @@ import BookShelves from './BookShelves'
 import BookSearchPage from './BookSearchPage'
 import { Route } from 'react-router-dom'
 
-
-
-
 class BooksApp extends React.Component {
   state = {
     books: []
